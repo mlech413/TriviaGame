@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+    color: darkgray;
+    background: black;
+}
+
+#title {
+    padding: 40px;
+}
+
+#start {
+    padding-top: 50px;
+}
+
+#btn-custom {
+    width: 50%;
+}
+
+#question {
+    padding-bottom: 40px;
+}
+
+button {
+    width: 900px;
+    border: 0;
+    background: darkgray
+}
+
+button:hover {
+    background: lightsteelblue;
+}
+
+.selection {
+    font-size: x-large;
+}
