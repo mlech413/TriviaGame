@@ -1,4 +1,6 @@
-var time = 30;
+var timeAmt = 30;
+var delayAmt = 5000;
+var time = timeAmt;
 var q = 0;
 var intervalId;
 var correctAnswer = false;
@@ -95,6 +97,7 @@ function playGame() {
     //begin function:
     function begin(){
         $("#start").empty();
+        console.log("  q (start) =" + q + "     QQQQQQ");
         //clear screen
         clearScreen();
         //populate questions and answers
@@ -106,7 +109,7 @@ function playGame() {
 
     function resetInd() {
         console.log("resetInd()");
-        time = 30;
+        time = timeAmt;
         clearInterval(intervalId);
         correctAnswer = false;
     }
@@ -119,10 +122,12 @@ function playGame() {
         $("#answer2").empty();
         $("#answer3").empty();
         $("#answer4").empty();
+        $(".selection").empty();
     }
 
     function populateQuestion() {
         console.log("populateQuestion()");
+        console.log("*****" + question[q]);
         $("#question").html("<h2>" + question[q] + "</h2>");
         $("#answer1").html("<button>" + answers.answer1[q] + "</button>");
         $("#answer2").html("<button>" + answers.answer2[q] + "</button>");
@@ -135,6 +140,7 @@ function playGame() {
         $("#timeRemaining").html("<h2>" + time + "</h2>");
         console.log("time=" + time);
         intervalId = setInterval(decrement, 1000);
+        // decrement();
     }
 
     function decrement() {
@@ -153,18 +159,14 @@ function playGame() {
             //write answer
             writeAnswer();
             //5 sec function
-            setTimeout(Delay, 5000);
-        }
-        else {
-            // console.log("else");
-            //--process clicked button
-            $(".selection").click(checkAnswer);
+            setTimeout(delay, delayAmt);
+            // delay();
         }
     }
 
     function stop() {
         console.log("stop()");
-        console.log("intervalID=" + intervalId);
+        console.log("intervalID=" + intervalId);  
         clearInterval(intervalId);
         $("#timeRemaining").empty();
     }
@@ -180,12 +182,13 @@ function playGame() {
     }
 
     function checkAnswer() {
+        console.log("after click------------");
         console.log("checkAnswer()");
         //stop clock
         stop();
         clearScreen();
         var buttonNum = $(this).attr("value");
-        console.log("$(this).attr('value'=" + $(this).attr("value"));
+        console.log("$(this).attr('value')=" + $(this).attr("value"));
         console.log("buttonNum: " + buttonNum);
         console.log("answers.answerKey[q]: " + answers.answerKey[q]);
         if(buttonNum == answers.answerKey[q]) {
@@ -206,8 +209,11 @@ function playGame() {
         }
          //write answer
          writeAnswer();
+        //  q++;
+        //  begin()
          //5 sec function
-         setTimeout(Delay, 5000);
+        setTimeout(delay, delayAmt);
+        // delay()
          return;
     }
 
@@ -229,15 +235,18 @@ function playGame() {
         else if (correctNumber == 4) {
             answerDisplay = answerDisplay + answers.answer4[q] + "</h2>";
         }
-        $("#question").html("<h2>" + answerDisplay + "</h2>");
+        console.log("   **" + answerDisplay);
+        // $("#question").html("<h2>" + answerDisplay + "</h2>");
+        $("#question").html(answerDisplay);
+        
     }
 
-    function Delay(){
-        console.log("Delay()");
+    function delay(){
+        console.log("delay()");
         resetInd();
         clearScreen();
         q++;
-        console.log("q=" + q);
+        console.log("  q (end) =" + q + "     QQQQQQ");
         console.log("question.length=" + question.length);
         if(q<question.length) {
             console.log("q<question.length")
@@ -269,6 +278,7 @@ function playGame() {
     losses = 0;
     notSelected = 0;
     begin();
+    $(".selection").click(checkAnswer);
 
 
 }
