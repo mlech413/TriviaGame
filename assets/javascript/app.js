@@ -90,11 +90,7 @@ function playGame() {
            2 ]
     };
 
-    q = 0;
-    clearInterval(intervalId);
-    wins = 0;
-    losses = 0;
-    notSelected = 0;
+
   
     //begin function:
     function begin(){
@@ -266,7 +262,12 @@ function playGame() {
         $("#start").click(playGame);
 
     }      
-
+    
+    q = 0;
+    clearInterval(intervalId);
+    wins = 0;
+    losses = 0;
+    notSelected = 0;
     begin();
 
 
