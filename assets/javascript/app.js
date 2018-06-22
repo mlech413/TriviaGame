@@ -1,4 +1,4 @@
-var time = 10;
+var time = 30;
 var q = 0;
 var intervalId;
 var correctAnswer = false;
@@ -67,9 +67,9 @@ function playGame() {
          "Purple",
          "Llama, camel, or alpaca fur"],
         "answer4" : 
-        ["There is no actual physical box",  //Fourth answer to first question 
-         "Fish",  //Fourth answer to second question 
-         "Dinosaur",  //Third answer to third question...
+        ["There is no actual physical box", //Fourth answer to first question 
+         "Fish",                            //Fourth answer to second question 
+         "Dinosaur",                        //Third answer to third question...
          "Unknown",
          "January",
          "Dogs",
@@ -110,7 +110,7 @@ function playGame() {
 
     function resetInd() {
         console.log("resetInd()");
-        time = 10;
+        time = 30;
         clearInterval(intervalId);
         correctAnswer = false;
     }
@@ -146,6 +146,7 @@ function playGame() {
         time--;
         $("#timeRemaining").html("<h2>" + time + "</h2>");
         // console.log("time=" + time);
+        //--stop and perform logic if time runs out
         if(time<=0){
             // console.log("time<=0");
             $("#timeRemaining").html("<h2>" + time + "</h2>");
@@ -160,6 +161,7 @@ function playGame() {
         }
         else {
             // console.log("else");
+            //--process clicked button
             $(".selection").click(checkAnswer);
         }
     }
