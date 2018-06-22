@@ -1,5 +1,5 @@
 var timeAmt = 30;
-var delayAmt = 5000;
+var delayAmt = 5400;
 var time = timeAmt;
 var q = 0;
 var intervalId;
@@ -36,9 +36,9 @@ function playGame() {
 
     var answers = {
         "answer1" : 
-        ["Gray",   //First answer to first question 
-         "Chicken",   //First answer to second question 
-         "Dog",   //First answer to third question... 
+        ["Gray",    //First answer to first question 
+         "Chicken", //First answer to second question 
+         "Dog",     //First answer to third question... 
          "China",
          "November",
          "Birds",
@@ -47,9 +47,9 @@ function playGame() {
          "Red",
          "Fox, wolf, or coyote fur"],
         "answer2" : 
-        ["Black",  //Second answer to first question 
-         "Beef",  //Second answer to second question 
-         "Pig",  //Second answer to third question...
+        ["Black",   //Second answer to first question 
+         "Beef",    //Second answer to second question 
+         "Pig",     //Second answer to third question...
          "U.S.A.",
          "October",
          "Fish",
@@ -58,9 +58,9 @@ function playGame() {
          "Blue",
          "Squirrel, goat, or ox fur"],
         "answer3" : 
-        ["Orange",   //Third answer to first question 
-         "Duck",   //Third answer to second question 
-         "Rodent",   //Third answer to third question...
+        ["Orange",  //Third answer to first question 
+         "Duck",    //Third answer to second question 
+         "Rodent",  //Third answer to third question...
          "Spain",
          "September",
          "Humans",
@@ -69,9 +69,9 @@ function playGame() {
          "Purple",
          "Llama, camel, or alpaca fur"],
         "answer4" : 
-        ["There is no actual physical box", //Fourth answer to first question 
-         "Fish",                            //Fourth answer to second question 
-         "Dinosaur",                        //Third answer to third question...
+        ["There is no actual box",  //Fourth answer to first question 
+         "Fish",                    //Fourth answer to second question 
+         "Dinosaur",                //Third answer to third question...
          "Unknown",
          "January",
          "Dogs",
@@ -122,7 +122,6 @@ function playGame() {
         $("#answer2").empty();
         $("#answer3").empty();
         $("#answer4").empty();
-        $(".selection").empty();
     }
 
     function populateQuestion() {
@@ -148,6 +147,7 @@ function playGame() {
         time--;
         $("#timeRemaining").html("<h2>" + time + "</h2>");
         // console.log("time=" + time);
+
         //--stop and perform logic if time runs out
         if(time<=0){
             // console.log("time<=0");
@@ -162,6 +162,7 @@ function playGame() {
             setTimeout(delay, delayAmt);
             // delay();
         }
+
     }
 
     function stop() {
@@ -182,7 +183,6 @@ function playGame() {
     }
 
     function checkAnswer() {
-        console.log("after click------------");
         console.log("checkAnswer()");
         //stop clock
         stop();
@@ -207,14 +207,11 @@ function playGame() {
             console.log("notSelected=" + notSelected);
             $("#timeRemaining").html("<h2>WRONG!</h2>");
         }
-         //write answer
-         writeAnswer();
-        //  q++;
-        //  begin()
-         //5 sec function
+        //write answer
+        writeAnswer();
+        //5 sec function
         setTimeout(delay, delayAmt);
-        // delay()
-         return;
+        return;
     }
 
      function writeAnswer() {
@@ -235,8 +232,10 @@ function playGame() {
         else if (correctNumber == 4) {
             answerDisplay = answerDisplay + answers.answer4[q] + "</h2>";
         }
+        var imageNum = q;
+        imageNum++;
+        answerDisplay = answerDisplay + "<img src='assets/images/" + imageNum + ".gif'>"
         console.log("   **" + answerDisplay);
-        // $("#question").html("<h2>" + answerDisplay + "</h2>");
         $("#question").html(answerDisplay);
         
     }
@@ -246,7 +245,7 @@ function playGame() {
         resetInd();
         clearScreen();
         q++;
-        console.log("  q (end) =" + q + "     QQQQQQ");
+        console.log("  q++ (end) =" + q + "     QQQQQQ");
         console.log("question.length=" + question.length);
         if(q<question.length) {
             console.log("q<question.length")
@@ -269,7 +268,6 @@ function playGame() {
         resetInd();
 
         $("#start").click(playGame);
-
     }      
     
     q = 0;
