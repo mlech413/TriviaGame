@@ -1,7 +1,12 @@
 body {
     text-align: center;
-    color: darkgray;
+    color:whitesmoke;
     background: black;
+    background: url("../images/wall.jpg");
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+h1 { color: darkturquoise
 }
 
 #title {
@@ -21,13 +26,13 @@ body {
 }
 
 button {
-    width: 900px;
+    width: 800px;
     border: 0;
     background: darkgray
 }
 
 button:hover {
-    background: lightsteelblue;
+    background: rgb(29, 189, 192);
 }
 
 .selection {

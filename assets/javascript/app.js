@@ -1,10 +1,10 @@
-var time = 5;
+var time = 10;
 var q = 0;
 var intervalId;
 var correctAnswer = false;
 var wins = 0;
 var losses = 0;
-var noSelection = 0;
+var notSelected = 0;
 var questionCounter = 0;
 var firstTimeIn = true;
 
@@ -17,6 +17,7 @@ window.onload = function() {
 }
 
 function playGame() {
+    console.log("*****PLAYGAME******");
 
     var question = [
         "What color are aircraft black boxes?",         //First question 
@@ -66,7 +67,7 @@ function playGame() {
          "Purple",
          "Llama, camel, or alpaca fur"],
         "answer4" : 
-        ["There is no actual box",  //Fourth answer to first question 
+        ["There is no actual physical box",  //Fourth answer to first question 
          "Fish",  //Fourth answer to second question 
          "Dinosaur",  //Third answer to third question...
          "Unknown",
@@ -89,30 +90,33 @@ function playGame() {
            2 ]
     };
 
+    q = 0;
+    clearInterval(intervalId);
+    wins = 0;
+    losses = 0;
+    notSelected = 0;
+  
+    //begin function:
+    function begin(){
+        $("#start").empty();
+        //clear screen
+        clearScreen();
+        //populate questions and answers
+        populateQuestion();
+        //run clock
+        runClock();
+          
+    }
+
     function resetInd() {
-        time = 5;
-        intervalId = undefined;
+        console.log("resetInd()");
+        time = 10;
+        clearInterval(intervalId);
         correctAnswer = false;
     }
 
-    function run() {
-        intervalId = setInterval(decrement, 1000);
-    }
-
-    function decrement() {
-        time--;
-        $("#timeRemaining").html("<h2>" + time + "</h2>");
-        if (time === 0) {
-          checkAnswer();
-        }
-      }
-
-    function stop() {
-        clearInterval(intervalId);
-        $("#timeRemaining").empty();
-    }
-
     function clearScreen() {
+        console.log("clearScreen()");
         $("#timeRemaining").empty();
         $("#question").empty();
         $("#answer1").empty();
@@ -121,52 +125,100 @@ function playGame() {
         $("#answer4").empty();
     }
 
-      function populateQuestion() {
+    function populateQuestion() {
+        console.log("populateQuestion()");
         $("#question").html("<h2>" + question[q] + "</h2>");
         $("#answer1").html("<button>" + answers.answer1[q] + "</button>");
         $("#answer2").html("<button>" + answers.answer2[q] + "</button>");
         $("#answer3").html("<button>" + answers.answer3[q] + "</button>");
         $("#answer4").html("<button>" + answers.answer4[q] + "</button>");
- 
     }
-      
 
-      function checkAnswer() {
-        stop()
+    function runClock() {
+        console.log("runClock()");
+        $("#timeRemaining").html("<h2>" + time + "</h2>");
+        console.log("time=" + time);
+        intervalId = setInterval(decrement, 1000);
+    }
+
+    function decrement() {
+        // console.log("decrement()");
+        time--;
+        $("#timeRemaining").html("<h2>" + time + "</h2>");
+        // console.log("time=" + time);
+        if(time<=0){
+            // console.log("time<=0");
+            $("#timeRemaining").html("<h2>" + time + "</h2>");
+            //stop clock
+            stop();
+            //no selection logic
+            noSelection();
+            //write answer
+            writeAnswer();
+            //5 sec function
+            setTimeout(Delay, 5000);
+        }
+        else {
+            // console.log("else");
+            $(".selection").click(checkAnswer);
+        }
+    }
+
+    function stop() {
+        console.log("stop()");
+        console.log("intervalID=" + intervalId);
+        clearInterval(intervalId);
+        $("#timeRemaining").empty();
+    }
+
+    function noSelection() {
+            console.log("NO SELECTION");
+            clearScreen();
+            notSelected++;
+            console.log("wins=" + wins);
+            console.log("losses=" + losses);
+            console.log("notSelected=" + notSelected);
+            $("#timeRemaining").html("<h2>Time's up!</h2>"); 
+    }
+
+    function checkAnswer() {
+        console.log("checkAnswer()");
+        //stop clock
+        stop();
+        clearScreen();
         var buttonNum = $(this).attr("value");
+        console.log("$(this).attr('value'=" + $(this).attr("value"));
         console.log("buttonNum: " + buttonNum);
-        // buttonNum = parseInt( buttonNum);
         console.log("answers.answerKey[q]: " + answers.answerKey[q]);
         if(buttonNum == answers.answerKey[q]) {
-            console.log("buttonNumInt == answerKeyInt");
-            correctAnswer = true;
-            }
-        else {
-            correctAnswer = false;
-            }
-        clearScreen();
-        console.log("correctAnswer: " + correctAnswer);
-        if(correctAnswer) {
-            console.log("if correctAnswer");
+            console.log("WIN");
             wins++;
+            console.log("wins=" + wins);
+            console.log("losses=" + losses);
+            console.log("notSelected=" + notSelected);
             $("#timeRemaining").html("<h2>CORRECT!</h2>");
         }
-        else if (time === 0) {
-            console.log("noSelection");
-            noSelection++;
-            $("#timeRemaining").html("<h2>Time's up!</h2>");
-        }
         else {
-            console.log("not correctAnswer");
+            console.log("LOSS");
             losses++;
+            console.log("wins=" + wins);
+            console.log("losses=" + losses);
+            console.log("notSelected=" + notSelected);
             $("#timeRemaining").html("<h2>WRONG!</h2>");
         }
-        writeAnswer();
+         //write answer
+         writeAnswer();
+         //5 sec function
+         setTimeout(Delay, 5000);
+         return;
     }
 
-    function writeAnswer() {
+     function writeAnswer() {
+        console.log("writeAnswer()");
+        console.log("answers.answerKey[q]=" + answers.answerKey[q]);
         var correctNumber = answers.answerKey[q];
         var answerDisplay = "<h2>" + question[q] + "</h2><br><h2>Answer: ";
+        console.log("correctNumber=" + correctNumber);
         if (correctNumber == 1) {
             answerDisplay = answerDisplay + answers.answer1[q] + "</h2>";
         }
@@ -179,33 +231,43 @@ function playGame() {
         else if (correctNumber == 4) {
             answerDisplay = answerDisplay + answers.answer4[q] + "</h2>";
         }
-         
         $("#question").html("<h2>" + answerDisplay + "</h2>");
-        q++;
-        
-        setTimeout(fiveSecondDelay, 5000);
-
-        function fiveSecondDelay(){
-            resetInd();
-            begin();
-        }      
-      }
-      
-      function begin() {
-        run();
-        $("#start").empty();
-        $("#timeRemaining").html("<h2>" + time + "</h2>");
-        populateQuestion();
-        $(".selection").click(checkAnswer); 
-      }
-
-    // if (time == 5) {
-    if (firstTimeIn) {
-        firstTimeIn = false;
-        begin()
     }
-      
-      
 
+    function Delay(){
+        console.log("Delay()");
+        resetInd();
+        clearScreen();
+        q++;
+        console.log("q=" + q);
+        console.log("question.length=" + question.length);
+        if(q<question.length) {
+            console.log("q<question.length")
+            begin();
+        }
+        else {
+            gameOver();
+        }
     
+    }
+
+    function gameOver() {
+        console.log("gameOver()");
+        clearScreen();
+        $("#timeRemaining").html("<h2>Game Over!</h2>");
+        $("#question").html("<h2>Wins: " + wins + "</h2>" +
+                            "<h2>Losses: " + losses + "</h2>" + 
+                            "<h2>Not selected: " + notSelected + "</h2>");
+        $("#start").html("<br><button type='button' class='btn btn-info btn-lg' id='btn-custom'>Play Again</button><br><br><br>");
+        resetInd();
+
+        $("#start").click(playGame);
+
+    }      
+
+    begin();
+
+
 }
+
+   
