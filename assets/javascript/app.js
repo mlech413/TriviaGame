@@ -1,5 +1,5 @@
 var timeAmt = 30;
-var delayAmt = 5400;
+var delayAmt = 540;
 var time = timeAmt;
 var q = 0;
 var intervalId;
@@ -8,7 +8,6 @@ var wins = 0;
 var losses = 0;
 var notSelected = 0;
 var questionCounter = 0;
-var firstTimeIn = true;
 
 //--on window load
 window.onload = function() {
@@ -267,8 +266,7 @@ function playGame() {
         $("#start").html("<br><button type='button' class='btn btn-info btn-lg' id='btn-custom'>Play Again</button><br><br><br>");
         resetInd();
 
-        $("#start").click(playGame);
-    }      
+        }      
     
     q = 0;
     clearInterval(intervalId);
