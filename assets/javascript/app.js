@@ -1,5 +1,5 @@
 var timeAmt = 30;
-var delayAmt = 540;
+var delayAmt = 5400;
 var time = timeAmt;
 var q = 0;
 var intervalId;
@@ -196,7 +196,7 @@ function playGame() {
             console.log("wins=" + wins);
             console.log("losses=" + losses);
             console.log("notSelected=" + notSelected);
-            $("#timeRemaining").html("<h2>CORRECT!</h2>");
+            $("#timeRemaining").html("<h2 style='color:lightgreen'>CORRECT!</h2>");
         }
         else {
             console.log("LOSS");
@@ -204,7 +204,7 @@ function playGame() {
             console.log("wins=" + wins);
             console.log("losses=" + losses);
             console.log("notSelected=" + notSelected);
-            $("#timeRemaining").html("<h2>WRONG!</h2>");
+            $("#timeRemaining").html("<h2 style='color:red'>WRONG!</h2>");
         }
         //write answer
         writeAnswer();
@@ -275,6 +275,7 @@ function playGame() {
     notSelected = 0;
     begin();
     $(".selection").click(checkAnswer);
+    clearInterval(intervalId);
 
 
 }
